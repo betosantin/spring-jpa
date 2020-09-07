@@ -41,7 +41,12 @@ public class VendasApplication {
 			});
 			
 			clis = clientes.obterTodos();
-			clis.forEach(System.out::println);
+			if(clis.isEmpty()) {
+				System.out.println("Nenhum cliente encontrado.");
+			} else {
+				clis.forEach(System.out::println);
+			}
+			
 		};
 		
 	}
