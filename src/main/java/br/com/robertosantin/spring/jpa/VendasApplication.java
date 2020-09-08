@@ -37,8 +37,13 @@ public class VendasApplication {
 			
 			
 			System.out.println("Buscando por nome....");
-			clis = clientes.findByNomeLike("Roberto");
+			clis = clientes.findByNomeLike("%Roberto%");
 			clis.forEach(System.out::println);
+			
+			clis = clientes.findAll();
+			clis.forEach( c -> {
+				System.out.println(clientes.existsById(c.getId()));
+			});
 			
 			
 			clis = clientes.findAll();
