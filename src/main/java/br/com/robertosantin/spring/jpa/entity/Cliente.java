@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,10 @@ public class Cliente {
 	@Column(name = "nome", length = 100)
 	private String nome;
 	
-	@OneToMany(mappedBy = "cliente")
+	//Relacionamento cliente-pedido
+	//fetch = Lazy (não 'popula' os pedidos quando realizado a consulta na tabela cliente)
+	//        Eager ('popula' sempre os pedidos quando realizado qualquer consulta na tabela cliente
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 
 	public Cliente() {
