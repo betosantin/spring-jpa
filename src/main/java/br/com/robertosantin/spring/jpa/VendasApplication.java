@@ -11,14 +11,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.robertosantin.spring.jpa.entity.Cliente;
-import br.com.robertosantin.spring.jpa.repository.Clientes;
+import br.com.robertosantin.spring.jpa.repository.ClienteRepository;
 
 @SpringBootApplication
 @RestController
 public class VendasApplication {
 	
 	@Bean
-	public CommandLineRunner init(@Autowired Clientes clientes) {
+	public CommandLineRunner init(@Autowired ClienteRepository clientes) {
 		
 		return args -> {
 			clientes.save(new Cliente("Roberto S"));
