@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -26,6 +28,7 @@ public class Cliente {
 	//Relacionamento cliente-pedido
 	//fetch = Lazy (não 'popula' os pedidos quando realizado a consulta na tabela cliente)
 	//        Eager ('popula' sempre os pedidos quando realizado qualquer consulta na tabela cliente
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 
