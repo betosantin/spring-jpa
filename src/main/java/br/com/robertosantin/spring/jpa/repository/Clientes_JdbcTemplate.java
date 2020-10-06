@@ -57,7 +57,7 @@ public class Clientes_JdbcTemplate {
 		return new RowMapper<Cliente>() {
 			@Override
 			public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new Cliente(rs.getInt("id"), rs.getString("nome"));
+				return new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"));
 			}
 		};
 	}

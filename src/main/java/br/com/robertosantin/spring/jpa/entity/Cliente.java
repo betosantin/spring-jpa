@@ -2,6 +2,7 @@ package br.com.robertosantin.spring.jpa.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,24 +26,30 @@ public class Cliente {
 	@Column(name = "nome", length = 100)
 	private String nome;
 	
+	@Column(name = "cpf", length = 11)
+	private String cpf;
+	
 	//Relacionamento cliente-pedido
-	//fetch = Lazy (não 'popula' os pedidos quando realizado a consulta na tabela cliente)
+	//fetch = Lazy (nï¿½o 'popula' os pedidos quando realizado a consulta na tabela cliente)
 	//        Eager ('popula' sempre os pedidos quando realizado qualquer consulta na tabela cliente
 	@JsonIgnore
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	//@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Pedido> pedidos;
 
 	public Cliente() {
 
 	}
 
-	public Cliente(String nome) {
+	public Cliente(String nome, String cpf) {
 		this.nome = nome;
+		this.cpf = cpf;
 	}
 
-	public Cliente(Integer id, String nome) {
+	public Cliente(Integer id, String nome, String cpf) {
 		this.id = id;
 		this.nome = nome;
+		this.cpf = cpf;
 	}
 
 	public Integer getId() {
@@ -68,10 +75,20 @@ public class Cliente {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	
+	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 	@Override
 	public String toString() {
-		return "Cliente {id=" + id + ", nome=" + nome + "}";
+		return "Cliente {id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", pedidos=" + pedidos + "}";
 	}
+
 
 }

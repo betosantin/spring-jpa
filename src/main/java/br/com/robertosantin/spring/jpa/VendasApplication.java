@@ -3,6 +3,7 @@ package br.com.robertosantin.spring.jpa;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +14,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.robertosantin.spring.jpa.entity.Cliente;
+import br.com.robertosantin.spring.jpa.entity.ItemPedido;
 import br.com.robertosantin.spring.jpa.entity.Pedido;
+import br.com.robertosantin.spring.jpa.entity.Produto;
+import br.com.robertosantin.spring.jpa.enums.StatusPedido;
 import br.com.robertosantin.spring.jpa.repository.ClienteRepository;
+import br.com.robertosantin.spring.jpa.repository.ItemPedidoRepository;
 import br.com.robertosantin.spring.jpa.repository.PedidoRepository;
+import br.com.robertosantin.spring.jpa.repository.ProdutoRepository;
 
 @SpringBootApplication
 @RestController
 public class VendasApplication {
 	
 	@Bean
-	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos) {
+	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos, @Autowired ProdutoRepository produtoRepository, @Autowired ItemPedidoRepository itemPedidoRepository) {
 		
 		return args -> {
-			clientes.save(new Cliente("Roberto S"));
-			clientes.save(new Cliente("Teste"));
+			clientes.save(new Cliente("Roberto S", "02139429095"));
+			clientes.save(new Cliente("Teste", "02139429095"));
 			
 			List<Cliente> clis = clientes.findAll();
 			clis.forEach(System.out::println);
@@ -76,7 +82,25 @@ public class VendasApplication {
 			Pedido p1 = new Pedido();
 			p1.setCliente(c);
 			p1.setDataPedido(LocalDate.now());
-			p1.setTotal(BigDecimal.valueOf(72.34));
+			p1.setTotal(BigDecimal.valueOf(2.99));
+			p1.setStatus(StatusPedido.REALIZADO);
+			
+			Produto prod = new Produto();
+			prod.setDescricao("Chapeu");
+			prod.setPreco(new BigDecimal(2.99));
+			
+			produtoRepository.save(prod);
+			
+			pedidos.save(p1);
+			
+			ItemPedido item = new ItemPedido();
+			item.setPedido(p1);
+			item.setProduto(prod);
+			item.setQuantidade(1);
+			
+			itemPedidoRepository.save(item);
+			
+			p1.setItens(Arrays.asList(item));
 			
 			pedidos.save(p1);
 			
