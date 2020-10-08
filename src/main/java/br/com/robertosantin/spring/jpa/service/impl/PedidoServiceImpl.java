@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.robertosantin.spring.exception.PedidoNaoEncontradoException;
 import br.com.robertosantin.spring.exception.RegraNegocioException;
 import br.com.robertosantin.spring.jpa.entity.Cliente;
 import br.com.robertosantin.spring.jpa.entity.ItemPedido;
@@ -81,6 +82,16 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	public Optional<Pedido> obterPedidoCompleto(Integer id) {
 		return pedidoRepository.findByIdFetchItens(id);
+	}
+
+	@Override
+	@Transactional
+	public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+		pedidoRepository.findById(id).map( ped -> {
+			ped.setStatus(statusPedido);
+			return pedidoRepository.save(ped);
+		}).orElseThrow( () -> new PedidoNaoEncontradoException());
+			
 	}
 	
 }

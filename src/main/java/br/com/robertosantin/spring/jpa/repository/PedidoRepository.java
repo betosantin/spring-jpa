@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.robertosantin.spring.jpa.entity.Cliente;
 import br.com.robertosantin.spring.jpa.entity.Pedido;
+import br.com.robertosantin.spring.jpa.enums.StatusPedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
 
@@ -16,5 +17,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
 	
 	@Query(" select p from Pedido p left join fetch p.itens where p.id = :id ") 
 	Optional<Pedido> findByIdFetchItens(@Param("id") Integer id);
+	
 }
 

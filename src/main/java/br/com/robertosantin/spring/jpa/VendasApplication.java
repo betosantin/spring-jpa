@@ -31,8 +31,8 @@ public class VendasApplication {
 	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos, @Autowired ProdutoRepository produtoRepository, @Autowired ItemPedidoRepository itemPedidoRepository) {
 		
 		return args -> {
-			clientes.save(new Cliente("Roberto S", "02139429095"));
-			clientes.save(new Cliente("Teste", "02139429095"));
+			clientes.save(new Cliente("Roberto S", "47667779058"));
+			clientes.save(new Cliente("Teste", "47667779058"));
 			
 			List<Cliente> clis = clientes.findAll();
 			clis.forEach(System.out::println);

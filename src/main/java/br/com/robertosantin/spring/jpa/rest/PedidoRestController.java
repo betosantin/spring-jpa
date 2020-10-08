@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.robertosantin.spring.jpa.entity.ItemPedido;
 import br.com.robertosantin.spring.jpa.entity.Pedido;
+import br.com.robertosantin.spring.jpa.enums.StatusPedido;
+import br.com.robertosantin.spring.jpa.rest.dto.AtualizaStatusDTO;
 import br.com.robertosantin.spring.jpa.rest.dto.InformacoesItemDTO;
 import br.com.robertosantin.spring.jpa.rest.dto.InformacoesPedidoDTO;
 import br.com.robertosantin.spring.jpa.rest.dto.PedidoDTO;
@@ -41,6 +44,13 @@ public class PedidoRestController {
 	public InformacoesPedidoDTO getById(@PathVariable Integer id) {
 		return pedidoRepository.obterPedidoCompleto(id).map(pedido -> converterParaDto(pedido))
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado."));
+	}
+	
+	@PatchMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateStatus(@PathVariable Integer id, @RequestBody AtualizaStatusDTO status) {
+		
+		pedidoRepository.atualizaStatus(id, StatusPedido.valueOf(status.getStatus()));
 	}
 
 	private InformacoesPedidoDTO converterParaDto(Pedido p) {
