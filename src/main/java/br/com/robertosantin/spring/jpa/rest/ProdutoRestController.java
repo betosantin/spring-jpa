@@ -2,6 +2,8 @@ package br.com.robertosantin.spring.jpa.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -35,7 +37,7 @@ public class ProdutoRestController {
 
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Produto postProduto(@RequestBody Produto produto) {
+	public Produto postProduto(@RequestBody @Valid Produto produto) {
 		return produtoRepository.save(produto);
 	}
 

@@ -3,10 +3,17 @@ package br.com.robertosantin.spring.jpa.rest.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import br.com.robertosantin.spring.jpa.annotations.NotEmptyList;
+
 public class PedidoDTO {
 
+	@NotNull(message = "{campo.pedidodto.cliente}")
 	private Integer cliente;
+	@NotNull(message = "{campo.pedidodto.preco}")
 	private BigDecimal total;
+	@NotEmptyList(message = "{campo.pedidodto.itens}")
 	private List<ItensPedidoDTO> itens;
 
 	public Integer getCliente() {

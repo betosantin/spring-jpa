@@ -2,6 +2,10 @@ package br.com.robertosantin.spring.jpa.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.executable.ExecutableType;
+import javax.validation.executable.ValidateOnExecution;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -44,7 +48,7 @@ public class ClienteRestNewController {
 
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente postCliente(@RequestBody Cliente cliente) {
+	public Cliente save(@RequestBody @Valid Cliente cliente) {
 		return clienteRepository.save(cliente);
 	}	
 
@@ -59,7 +63,7 @@ public class ClienteRestNewController {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+	public void update(@PathVariable Integer id, @RequestBody @Valid Cliente cliente) {
 		clienteRepository.findById(id).map(clienteExistente -> {
 			cliente.setId(clienteExistente.getId());
 			clienteRepository.save(cliente);

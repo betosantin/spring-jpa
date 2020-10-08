@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -34,9 +36,9 @@ public class PedidoRestController {
 	@Autowired
 	private PedidoService pedidoRepository;
 
-	@PostMapping("/inserir")
+	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Integer save(@RequestBody PedidoDTO pedido) {
+	public Integer save(@RequestBody @Valid PedidoDTO pedido) {
 		return pedidoRepository.salvar(pedido).getId();
 	}
 
