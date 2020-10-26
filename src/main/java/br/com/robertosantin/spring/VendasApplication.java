@@ -17,18 +17,20 @@ import br.com.robertosantin.spring.jpa.entity.Cliente;
 import br.com.robertosantin.spring.jpa.entity.ItemPedido;
 import br.com.robertosantin.spring.jpa.entity.Pedido;
 import br.com.robertosantin.spring.jpa.entity.Produto;
+import br.com.robertosantin.spring.jpa.entity.Usuario;
 import br.com.robertosantin.spring.jpa.enums.StatusPedido;
 import br.com.robertosantin.spring.jpa.repository.ClienteRepository;
 import br.com.robertosantin.spring.jpa.repository.ItemPedidoRepository;
 import br.com.robertosantin.spring.jpa.repository.PedidoRepository;
 import br.com.robertosantin.spring.jpa.repository.ProdutoRepository;
+import br.com.robertosantin.spring.service.impl.UsuarioServiceImpl;
 
 @SpringBootApplication
 @RestController
 public class VendasApplication {
 	
 	@Bean
-	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos, @Autowired ProdutoRepository produtoRepository, @Autowired ItemPedidoRepository itemPedidoRepository) {
+	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos, @Autowired ProdutoRepository produtoRepository, @Autowired ItemPedidoRepository itemPedidoRepository, @Autowired UsuarioServiceImpl usuarioService) {
 		
 		return args -> {
 			clientes.save(new Cliente("Roberto S", "47667779058"));
@@ -111,6 +113,13 @@ public class VendasApplication {
 			
 			
 			pedidos.findByCliente(cli).forEach(System.out::println);;
+			
+			Usuario usuario = new Usuario();
+			usuario.setAdmin(true);
+			usuario.setLogin("roberto");
+			usuario.setSenha("123");
+			
+			usuarioService.salvar(usuario);
 		};
 		
 	}

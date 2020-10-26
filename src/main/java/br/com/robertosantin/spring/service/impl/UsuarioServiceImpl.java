@@ -24,6 +24,10 @@ public class UsuarioServiceImpl implements UserDetailsService {
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
+		
+		String senha = encoder.encode(usuario.getSenha());
+		usuario.setSenha(senha);
+		
 		return usuarioRepository.save(usuario);
 	}
 	
