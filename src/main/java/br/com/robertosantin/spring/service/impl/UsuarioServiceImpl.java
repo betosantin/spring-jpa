@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.robertosantin.spring.exception.SenhaInvalidaException;
 import br.com.robertosantin.spring.jpa.entity.Usuario;
 import br.com.robertosantin.spring.jpa.repository.UsuarioRepository;
 
@@ -24,11 +25,18 @@ public class UsuarioServiceImpl implements UserDetailsService {
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
-		
-		String senha = encoder.encode(usuario.getSenha());
-		usuario.setSenha(senha);
-		
 		return usuarioRepository.save(usuario);
+	}
+	
+	public UserDetails autenticar(Usuario usuario) {
+		UserDetails ud = this.loadUserByUsername(usuario.getLogin());
+		
+		if(encoder.matches(usuario.getSenha(), ud.getPassword())) {
+			return ud;
+		}
+		
+		throw new SenhaInvalidaException();
+		
 	}
 	
 	@Override
