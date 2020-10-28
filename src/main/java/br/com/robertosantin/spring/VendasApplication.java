@@ -1,33 +1,16 @@
 package br.com.robertosantin.spring;
 
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.robertosantin.spring.jpa.entity.Cliente;
-import br.com.robertosantin.spring.jpa.entity.ItemPedido;
-import br.com.robertosantin.spring.jpa.entity.Pedido;
-import br.com.robertosantin.spring.jpa.entity.Produto;
-import br.com.robertosantin.spring.jpa.entity.Usuario;
-import br.com.robertosantin.spring.jpa.enums.StatusPedido;
-import br.com.robertosantin.spring.jpa.repository.ClienteRepository;
-import br.com.robertosantin.spring.jpa.repository.ItemPedidoRepository;
-import br.com.robertosantin.spring.jpa.repository.PedidoRepository;
-import br.com.robertosantin.spring.jpa.repository.ProdutoRepository;
-import br.com.robertosantin.spring.service.impl.UsuarioServiceImpl;
 
 @SpringBootApplication
 @RestController
-public class VendasApplication {
+public class VendasApplication 
+	extends SpringBootServletInitializer {
+	//Para gerar o WAR
 	
 //	@Bean
 //	public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos, @Autowired ProdutoRepository produtoRepository, @Autowired ItemPedidoRepository itemPedidoRepository, @Autowired UsuarioServiceImpl usuarioService) {
